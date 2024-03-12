@@ -1,0 +1,161 @@
+#1.single object
+single-object:
+  - "a sbs toy"
+  - "a photo of a sbs toy"
+  - "a human and a sbs toy"
+  - "a human with sbs toy"
+  - "a toy and a sbs toy"
+  - "a cat and a sbs toy"
+  - "a monkey and a sbs toy"
+  - "a photo of a sbs toy"
+
+#color style
+style:
+  - "a red sbs toy"
+  - "a blue sbs toy"
+  - "a sbs toy in painting style"
+  - "a sbs toy in Van Gogh style"
+  - "a sbs toy in graffiti style"
+  - "a sbs toy in comic style"
+
+# as-style:
+#   - "a cat in style of sbs toy"
+#   - "a horse in style of sbs toy"
+#   - "a toy in style of sbs toy"
+#   - "a table in style of sbs toy"
+#   - "a glasses in style of sbs toy"
+#   - "a crown in style of sbs toy"
+#   - "a car in style of sbs toy"
+#   - "a tree in style of sbs toy"
+#   - "an apple in style of sbs toy"
+
+
+# as-color:
+#   - "a sbs toy color cat"
+#   - "a sbs toy color monkey"
+#   - "a sbs toy color bike"
+#   - "a sbs toy color guitar"
+#   - "a sbs toy color tree"
+#   - "a sbs toy color apple"
+
+# as-color2:
+#   - "a sbs toy cat"
+#   - "a sbs toy monkey"
+#   - "a sbs toy bike"
+#   - "a sbs toy guitar"
+#   - "a sbs toy tree"
+#   - "a sbs toy apple"
+
+# as-shape:
+#   - "a sbs toy shape cat"
+#   - "a sbs toy shape monkey"
+#   - "a sbs toy shape bike"
+#   - "a sbs toy shape guitar"
+#   - "a sbs toy shape tree"
+#   - "a sbs toy shape bowl"
+#   - "a sbs toy shape cup"
+#   - "a sbs toy shape apple"
+
+##2.verb
+verb:
+  - "a photo of a running sbs toy"
+  - "a photo of a sleeping sbs toy"
+  - "a photo of a sitting sbs toy"
+  - "a photo of a standing sbs toy"
+  - "a photo of a walking sbs toy"
+  - "a photo of a dancing sbs toy"
+
+##3.interacting-
+interact-obj:
+  - "a sbs toy is running in the grass"
+  - "a sbs toy is sleeping in bed"
+  - "a sbs toy is sitting on a sofa"
+  - "a sbs toy is playing a soccer in grass"
+  - "a sbs toy is walking in the road"
+  - "a sbs toy is dancing near a river"
+  - "a sbs toy with a glasses"
+  - "a sbs toy wearning a jacket"
+  - "a sbs toy with a crown"
+  - "a sbs toy with long hair"
+  - "a sbs toy is riding a bike"
+  - "a sbs toy is under a table"
+  - "a sbs toy is on the top of a table"
+  
+
+interact-animal:
+  - a sbs toy is playing with a cat
+  - a toy is in left of a sbs toy
+  - a toy is fighting with a sbs toy
+  - a sbs toy is riding a horse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#1.single object
+prior-single-object:
+  - "a toy"
+  - "a photo of a toy"
+  - "a human and a toy"
+  - "a human with toy"
+  - "a toy and a toy"
+  - "a cat and a toy"
+  - "a monkey and a toy"
+  - "a photo of a toy"
+
+#color style
+prior-style:
+  - "a red toy"
+  - "a blue toy"
+  - "a toy in painting style"
+  - "a toy in Van Gogh style"
+  - "a toy in graffiti style"
+  - "a toy in comic style"
+
+
+##2.verb
+prior-verb:
+  - "a photo of a running toy"
+  - "a photo of a sleeping toy"
+  - "a photo of a sitting toy"
+  - "a photo of a standing toy"
+  - "a photo of a walking toy"
+  - "a photo of a dancing toy"
+
+##3.interacting-
+prior-interact-obj:
+  - "a toy is running in the grass"
+  - "a toy is sleeping in bed"
+  - "a toy is sitting on a sofa"
+  - "a toy is playing a soccer in grass"
+  - "a toy is walking in the road"
+  - "a toy is dancing near a river"
+  - "a toy with a glasses"
+  - "a toy wearning a jacket"
+  - "a toy with a crown"
+  - "a toy with long hair"
+  - "a toy is riding a bike"
+  - "a toy is under a table"
+  - "a toy is on the top of a table"
+  
+
+prior-interact-animal:
+  - a toy is playing with a cat
+  - a toy is in left of a toy
+  - a toy is fighting with a toy
+  - a toy is riding a horse
+

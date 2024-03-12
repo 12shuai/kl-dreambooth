@@ -1,0 +1,132 @@
+#1.single object
+# single-object:
+#   - "a giraffe"
+#   - "a giraffe in grass"
+#   - "a giraffe in snow"
+#   - "a giraffe in mud"
+#   - "a giraffe and a dog"
+#   - "a zebra"
+#   - "a zebra in grass"
+#   - "a zebra in snow"
+#   - "a zebra in mud"
+#   - "a zebra in beach"
+#   - "a zebra and a dog"
+#   - "a zebra with glasses"
+#   - "a dog and a zebra"
+#   - "a zebra with hat"
+#   - "a zebra with shirt"
+#   - "a zebra under an umbrella"
+#   - "a zebra near a table"
+
+# single-object:
+  # - "a man with hat"
+  # - "a man"
+  # - "a hat"
+  # - "a girl with hat"
+  # - "a boy with hat"
+  # - "a woman with hat"
+  # - "a dog with hat"
+  # - "a man with a hat"
+  # - "a man with a glasses"
+# single-object:
+#   - "a <man0> with <hat0>"
+#   - "a <man0>"
+#   - "a <hat0>"
+#   - "a girl with <hat0>"
+#   - "a boy with <hat0>"
+#   - "a woman with <hat0>"
+#   - "a dog with <hat0>"
+#   - "a <man0> with a hat"
+#   - "a <man0> with a glasses"
+
+single-object:
+  - "a <woman0> with <hat1>"
+  - "a <woman1> with <hat0>"
+  - "a <hat0>"
+  - "a <hat1>"
+  - "a man with <hat0>"
+  - "a man with <hat1>"
+  - "a dog with <hat0>"
+  - "a dog with <hat1>"
+  - "a <woman0> with a glasses"
+  - "a <woman1> with a glasses"
+
+##color style
+# style:
+#   - "a red <asset0>"
+#   - "a blue <asset0>"
+#   - "a <asset0> in painting style"
+#   - "a <asset0> in Van Gogh style"
+#   - "a <asset0> in graffiti style"
+#   - "a <asset0> in comic style"
+
+# as-style:
+#   - "a cat in style of <asset0>"
+#   - "a horse in style of <asset0>"
+#   - "a dog in style of <asset0>"
+#   - "a table in style of <asset0>"
+#   - "a glasses in style of <asset0>"
+#   - "a crown in style of <asset0>"
+#   - "a car in style of <asset0>"
+#   - "a tree in style of <asset0>"
+#   - "an apple in style of <asset0>"
+
+
+# as-color:
+#   - "a <asset0> color cat"
+#   - "a <asset0> color monkey"
+#   - "a <asset0> color bike"
+#   - "a <asset0> color guitar"
+#   - "a <asset0> color tree"
+#   - "a <asset0> color apple"
+
+# as-color2:
+#   - "a <asset0> cat"
+#   - "a <asset0> monkey"
+#   - "a <asset0> bike"
+#   - "a <asset0> guitar"
+#   - "a <asset0> tree"
+#   - "a <asset0> apple"
+
+# as-shape:
+#   - "a <asset0> shape cat"
+#   - "a <asset0> shape monkey"
+#   - "a <asset0> shape bike"
+#   - "a <asset0> shape guitar"
+#   - "a <asset0> shape tree"
+#   - "a <asset0> shape bowl"
+#   - "a <asset0> shape cup"
+#   - "a <asset0> shape apple"
+
+# ##2.verb
+# verb:
+#   - "a photo of a running <asset0>"
+#   - "a photo of a sleeping <asset0>"
+#   - "a photo of a sitting <asset0>"
+#   - "a photo of a standing <asset0>"
+#   - "a photo of a walking <asset0>"
+#   - "a photo of a dancing <asset0>"
+
+# ##3.interacting-
+# interact-obj:
+#   - "a <asset0> is running in the grass"
+#   - "a <asset0> is sleeping in bed"
+#   - "a <asset0> is sitting on a sofa"
+#   - "a <asset0> is playing a soccer in grass"
+#   - "a <asset0> is walking in the road"
+#   - "a <asset0> is dancing near a river"
+#   - "a <asset0> with a glasses"
+#   - "a <asset0> wearning a jacket"
+#   - "a <asset0> with a crown"
+#   - "a <asset0> with long hair"
+#   - "a <asset0> is riding a bike"
+#   - "a <asset0> is under a table"
+#   - "a <asset0> is on the top of a table"
+  
+
+# interact-animal:
+#   - a <asset0> is playing with a cat
+#   - a dog is in left of a <asset0>
+#   - a dog is fighting with a <asset0>
+#   - a <asset0> is riding a horse
+

@@ -1,0 +1,178 @@
+# #1.single object
+# single-object:
+#   # - "a <asset0>, in style of <asset1>"
+#   # - "a photo of <asset0>, in style of <asset1>"
+#   - "a <asset1> color <asset0>"
+#   - "a photo of <asset1> color <asset0>"
+#   - "a <asset0>"
+#   - "a photo of a <asset0>"
+#   # - "a photo in style of <asset1>"
+#   # - "a photo of a <asset1>"
+
+single-object:
+  # - "a <asset0>, in style of <asset1>"
+  # - "a photo of <asset0>, in style of <asset1>"
+  # - "<asset0> color creature"
+  # - "a <asset0> color creature"
+  # - "a photo of <asset0> color creature"
+  # - "a photo of <asset0> color <asset1> object"
+  # - "a photo in style of <asset1>"
+  # - "a photo of a <asset0> object"
+  # - "<asset0> object"
+  # - "a <asset0> object in <asset1> style"
+  # - "a photo of a <asset0> object in <asset1> style"
+  # - "<asset0> shape creature"
+  # - "a <asset0> shape creature"
+  # - "a photo of <asset0> shape <asset1> object"
+  # - "a <asset0> color <asset1> object"
+  # - "a photo of <asset0> color <asset1> object"
+  # - "a photo of <asset0> color, <asset2> shape, <asset1> object, in <asset3> style"
+  # - "a photo of <asset2> shape, <asset1> object, in <asset3> style"
+  # - "a photo of <asset0> color, <asset2> shape, <asset1>"
+  # - "a photo of <asset0> color, <asset1> object, in <asset2> style"
+  # - "a photo of <asset0>"
+  # - "a photo of red"
+  - "a photo of <asset1>"
+  - "a photo of <asset0>"
+  - "a photo of a human with <asset0> nose"
+  - "a photo of a human with <asset0>"
+  - "a photo of <asset0> creature"
+  - "a photo of <asset0> <asset1>"
+  - "a photo of <asset0> human"
+  - "a photo of nose"
+  - "a photo of object"
+  # - "a photo of <asset2>"
+  # - "a photo of <asset0> <asset1>"
+  # - "a photo of <asset1> <asset0>"
+  # - "a photo of <asset0> <asset1> <asset2>"
+  # - "a photo of <asset0> <asset2> <asset1>"
+  # - "a photo of <asset1> <asset0> <asset2>"
+
+
+
+# as-color:
+#   - "a <asset0> color cat"
+#   - "a <asset0> color monkey"
+#   - "a <asset0> color bike"
+#   - "a <asset0> color guitar"
+#   - "a <asset0> color tree"
+#   - "a <asset0> color apple"
+# as-color:
+#   - "a red cat"
+#   - "a <asset0> cat"
+#   - "a <asset0> monkey"
+#   - "a <asset0> bike"
+#   - "a <asset0> guitar"
+#   - "a <asset0> tree"
+#   - "a <asset0> apple"
+
+# as-object:
+#   - "a <asset0> color cat"
+#   - "a <asset0> color monkey"
+#   - "a <asset0> color bike"
+#   - "a <asset0> color guitar"
+#   - "a <asset0> color tree"
+#   - "a <asset0> color apple"
+# as-shape:
+#   - "a <asset2> shape cat"
+#   - "a <asset2> shape monkey"
+#   - "a <asset2> shape dog"
+#   - "a <asset2> shape guitar"
+#   - "a <asset2> shape tree"
+#   - "a <asset2> shape bowl"
+#   - "a <asset2> shape cup"
+#   - "a <asset2> shape apple"
+#   - "a <asset2> shape creature"
+# ##2.object
+# ##color style
+# style:
+#   - "a red <asset0> object"
+#   - "a blue <asset0> object"
+#   - "a <asset0> object in painting style"
+#   - "a <asset0> object in Van Gogh style"
+#   - "a <asset0> object in graffiti style"
+#   - "a <asset0> object in comic style"
+
+# as-style:
+#   - "a cat in <asset3> style"
+#   - "a horse in <asset3> style"
+#   - "a dog in <asset3> style"
+#   - "a table in <asset3> style"
+#   - "a glasses in <asset3> style"
+#   - "a crown in <asset3> style"
+#   - "a car in <asset3> style"
+#   - "a tree in <asset3> style"
+#   - "an apple in <asset3> style"
+
+# as-style:
+#   - "a cat in <asset1> style"
+#   - "a horse in <asset1> style"
+#   - "a dog in <asset1> style"
+#   - "a table in <asset1> style"
+#   - "a glasses in <asset1> style"
+#   - "a crown in <asset1> style"
+#   - "a car in <asset1> style"
+#   - "a tree in <asset1> style"
+#   - "an apple in <asset1> style"
+
+# as-style2:
+#   - "a cat in style of <asset3>"
+#   - "a horse in style of <asset3>"
+#   - "a dog in style of <asset3>"
+#   - "a table in style of <asset3>"
+#   - "a glasses in style of <asset3>"
+#   - "a crown in style of <asset3>"
+#   - "a car in style of <asset3>"
+#   - "a tree in style of <asset3>"
+#   - "an apple in style of <asset3>"
+
+# as-color:
+#   - "a <asset1> color cat"
+#   - "a <asset1> color monkey"
+#   - "a <asset1> color bike"
+#   - "a <asset1> color guitar"
+#   - "a <asset1> color tree"
+#   - "a <asset1> color apple"
+
+# # as-shape:
+# #   - "a <asset0> shape cat"
+# #   - "a <asset0> shape monkey"
+# #   - "a <asset0> shape bike"
+# #   - "a <asset0> shape guitar"
+# #   - "a <asset0> shape tree"
+# #   - "a <asset0> shape bowl"
+# #   - "a <asset0> shape cup"
+# #   - "a <asset0> shape apple"
+
+# ##2.verb
+# verb:
+#   - "a photo of a running <asset1>"
+#   - "a photo of a sleeping <asset1>"
+#   - "a photo of a sitting <asset1>"
+#   - "a photo of a standing <asset1>"
+#   - "a photo of a walking <asset1>"
+#   - "a photo of a dancing <asset1>"
+
+# ##3.interacting-
+# interact-obj:
+#   - "a <asset0> is running in the grass"
+#   - "a <asset0> is sleeping in bed"
+#   - "a <asset0> is sitting on a sofa"
+#   - "a <asset0> is playing a soccer in grass"
+#   - "a <asset0> is walking in the road"
+#   - "a <asset0> is dancing near a river"
+#   - "a <asset0> with a glasses"
+#   - "a <asset0> wearning a jacket"
+#   - "a <asset0> with a crown"
+#   - "a <asset0> with long hair"
+#   - "a <asset0> is riding a bike"
+#   - "a <asset0> is under a table"
+#   - "a <asset0> is on the top of a table"
+  
+
+# interact-animal:
+#   - a <asset0> is playing with a cat
+#   - a dog is in left of a <asset0>
+#   - a dog is fighting with a <asset0>
+#   - a <asset0> is riding a horse
+

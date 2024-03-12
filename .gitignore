@@ -1,0 +1,14 @@
+# Pycharm
+__pycache__
+
+# Project
+inputs
+
+
+docs
+
+dreambooth-*/
+
+*.txt
+
+

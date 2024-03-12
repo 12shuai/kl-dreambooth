@@ -1,0 +1,71 @@
+以下参数比较可以，其中：inside_term = -1000 * total_loss 
+CUDA_VISIBLE_DEVICES=3 python3 train_dreambooth_self_play.py \
+  --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/dog5" \
+  --instance_class "dog"\
+  --phase1_train_steps 0\
+  --phase2_train_steps 1000 \
+  --output_dir dreambooth-self-play-outputs\
+  --img_log_steps 200 \
+  --log_checkpoints \
+  --initial_learning_rate 5e-6 \
+  --train_batch_size 2 \
+  --no_prior_preservation \
+  --gen_data_dir inputs/dreambooth_self_play_data_dir\
+  --exchange_interval 10 \
+  --gen_num 1 \
+  --proj_name "dog5_scale_max_debug4_use_ppo_interval10_use_approximate"\
+  --beta_dpo 5000\
+  --loss_type "logsigmoid" \
+  --train_text_encoder \
+  --diff_2_weights 1 \
+  --use_approximate \
+  --use_ppo \
+  --ppo_episilon 1e-2 \
+
+
+最后的结果在“dog5_scale_max_debug4_use_ppo_interval10_use_approximate/eval”中。
+
+缺陷：
+拟合问题：
+1.不用ppo测一下——发散
+2.用了ppo发现容易过拟合
+3.通过将生成的改为approximate变好了！！！！！
+
+
+
+实验现象
+2. 有点欠拟合，生成的很丑
+  使用LCM
+  检查loss——训练不稳定，中评价
+    只用在diff_2上——没太大区别
+    换scale_term——没太大区别，感觉更容易发散了
+    ppo随时间变化（看loss项,600步的时候开始出问题）
+    换步长
+    用KL版本
+    折扣因子&基准线？？？
+    
+
+
+
+
+
+接下来计划
+1.提升欠拟合
+变化weight
+放在SDXL
+
+2.提升过拟合
+  使用LCM
+  双向kl散度
+  试一下别的prompt，比如style——似乎没什么效果
+  只用sbs，去掉a photo of
+  提升时间
+  使用CC
+  多个目标
+  单图编辑
+
+
+2.构思self-play如何引入这个东西
+
+
+3.为什么有的图像很好编辑

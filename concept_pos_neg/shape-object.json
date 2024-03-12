@@ -1,0 +1,11 @@
+{
+    "<asset0>":[
+        "shape",
+        "sphere",
+        "rectangle",
+        "triangle"
+    ],
+    "<asset1>":[
+        "object"
+    ]
+}

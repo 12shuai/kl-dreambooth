@@ -1,0 +1,161 @@
+#1.single object
+single-object:
+  - "a sbs dog"
+  - "a photo of a sbs dog"
+  - "a human and a sbs dog"
+  - "a human with sbs dog"
+  - "a dog and a sbs dog"
+  - "a cat and a sbs dog"
+  - "a monkey and a sbs dog"
+  - "a photo of a sbs dog"
+
+#color style
+style:
+  - "a red sbs dog"
+  - "a blue sbs dog"
+  - "a sbs dog in painting style"
+  - "a sbs dog in Van Gogh style"
+  - "a sbs dog in graffiti style"
+  - "a sbs dog in comic style"
+
+# as-style:
+#   - "a cat in style of sbs dog"
+#   - "a horse in style of sbs dog"
+#   - "a dog in style of sbs dog"
+#   - "a table in style of sbs dog"
+#   - "a glasses in style of sbs dog"
+#   - "a crown in style of sbs dog"
+#   - "a car in style of sbs dog"
+#   - "a tree in style of sbs dog"
+#   - "an apple in style of sbs dog"
+
+
+# as-color:
+#   - "a sbs dog color cat"
+#   - "a sbs dog color monkey"
+#   - "a sbs dog color bike"
+#   - "a sbs dog color guitar"
+#   - "a sbs dog color tree"
+#   - "a sbs dog color apple"
+
+# as-color2:
+#   - "a sbs dog cat"
+#   - "a sbs dog monkey"
+#   - "a sbs dog bike"
+#   - "a sbs dog guitar"
+#   - "a sbs dog tree"
+#   - "a sbs dog apple"
+
+# as-shape:
+#   - "a sbs dog shape cat"
+#   - "a sbs dog shape monkey"
+#   - "a sbs dog shape bike"
+#   - "a sbs dog shape guitar"
+#   - "a sbs dog shape tree"
+#   - "a sbs dog shape bowl"
+#   - "a sbs dog shape cup"
+#   - "a sbs dog shape apple"
+
+##2.verb
+verb:
+  - "a photo of a running sbs dog"
+  - "a photo of a sleeping sbs dog"
+  - "a photo of a sitting sbs dog"
+  - "a photo of a standing sbs dog"
+  - "a photo of a walking sbs dog"
+  - "a photo of a dancing sbs dog"
+
+##3.interacting-
+interact-obj:
+  - "a sbs dog is running in the grass"
+  - "a sbs dog is sleeping in bed"
+  - "a sbs dog is sitting on a sofa"
+  - "a sbs dog is playing a soccer in grass"
+  - "a sbs dog is walking in the road"
+  - "a sbs dog is dancing near a river"
+  - "a sbs dog with a glasses"
+  - "a sbs dog wearning a jacket"
+  - "a sbs dog with a crown"
+  - "a sbs dog with long hair"
+  - "a sbs dog is riding a bike"
+  - "a sbs dog is under a table"
+  - "a sbs dog is on the top of a table"
+  
+
+interact-animal:
+  - a sbs dog is playing with a cat
+  - a dog is in left of a sbs dog
+  - a dog is fighting with a sbs dog
+  - a sbs dog is riding a horse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#1.single object
+prior-single-object:
+  - "a dog"
+  - "a photo of a dog"
+  - "a human and a dog"
+  - "a human with dog"
+  - "a dog and a dog"
+  - "a cat and a dog"
+  - "a monkey and a dog"
+  - "a photo of a dog"
+
+#color style
+prior-style:
+  - "a red dog"
+  - "a blue dog"
+  - "a dog in painting style"
+  - "a dog in Van Gogh style"
+  - "a dog in graffiti style"
+  - "a dog in comic style"
+
+
+##2.verb
+prior-verb:
+  - "a photo of a running dog"
+  - "a photo of a sleeping dog"
+  - "a photo of a sitting dog"
+  - "a photo of a standing dog"
+  - "a photo of a walking dog"
+  - "a photo of a dancing dog"
+
+##3.interacting-
+prior-interact-obj:
+  - "a dog is running in the grass"
+  - "a dog is sleeping in bed"
+  - "a dog is sitting on a sofa"
+  - "a dog is playing a soccer in grass"
+  - "a dog is walking in the road"
+  - "a dog is dancing near a river"
+  - "a dog with a glasses"
+  - "a dog wearning a jacket"
+  - "a dog with a crown"
+  - "a dog with long hair"
+  - "a dog is riding a bike"
+  - "a dog is under a table"
+  - "a dog is on the top of a table"
+  
+
+prior-interact-animal:
+  - a dog is playing with a cat
+  - a dog is in left of a dog
+  - a dog is fighting with a dog
+  - a dog is riding a horse
+

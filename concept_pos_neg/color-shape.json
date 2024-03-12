@@ -1,0 +1,18 @@
+{
+    "<asset0>":[
+        "color",
+        "red",
+        "blue",
+        "yellow",
+        "white",
+        "black",
+        "purple",
+        "brown"
+    ],
+    "<asset1>":[
+        "shape",
+        "sphere",
+        "rectangle",
+        "triangle"
+    ]
+}

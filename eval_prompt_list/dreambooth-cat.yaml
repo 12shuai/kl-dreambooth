@@ -1,0 +1,90 @@
+#1.single object
+single-object:
+  - "a sbs cat"
+  - "a photo of a sbs cat"
+  - "a human and a sbs cat"
+  - "a human with sbs cat"
+  - "a dog and a sbs cat"
+  - "a cat and a sbs cat"
+  - "a monkey and a sbs cat"
+  - "a photo of a sbs cat"
+
+#color style
+style:
+  - "a red sbs cat"
+  - "a blue sbs cat"
+  - "a sbs cat in painting style"
+  - "a sbs cat in Van Gogh style"
+  - "a sbs cat in graffiti style"
+  - "a sbs cat in comic style"
+
+# as-style:
+#   - "a cat in style of sbs cat"
+#   - "a horse in style of sbs cat"
+#   - "a dog in style of sbs cat"
+#   - "a table in style of sbs cat"
+#   - "a glasses in style of sbs cat"
+#   - "a crown in style of sbs cat"
+#   - "a car in style of sbs cat"
+#   - "a tree in style of sbs cat"
+#   - "an apple in style of sbs cat"
+
+
+# as-color:
+#   - "a sbs cat color cat"
+#   - "a sbs cat color monkey"
+#   - "a sbs cat color bike"
+#   - "a sbs cat color guitar"
+#   - "a sbs cat color tree"
+#   - "a sbs cat color apple"
+
+# as-color2:
+#   - "a sbs cat cat"
+#   - "a sbs cat monkey"
+#   - "a sbs cat bike"
+#   - "a sbs cat guitar"
+#   - "a sbs cat tree"
+#   - "a sbs cat apple"
+
+# as-shape:
+#   - "a sbs cat shape cat"
+#   - "a sbs cat shape monkey"
+#   - "a sbs cat shape bike"
+#   - "a sbs cat shape guitar"
+#   - "a sbs cat shape tree"
+#   - "a sbs cat shape bowl"
+#   - "a sbs cat shape cup"
+#   - "a sbs cat shape apple"
+
+##2.verb
+verb:
+  - "a photo of a running sbs cat"
+  - "a photo of a sleeping sbs cat"
+  - "a photo of a sitting sbs cat"
+  - "a photo of a standing sbs cat"
+  - "a photo of a walking sbs cat"
+  - "a photo of a dancing sbs cat"
+
+##3.interacting-
+interact-obj:
+  - "a sbs cat is running in the grass"
+  - "a sbs cat is sleeping in bed"
+  - "a sbs cat is sitting on a sofa"
+  - "a sbs cat is playing a soccer in grass"
+  - "a sbs cat is walking in the road"
+  - "a sbs cat is dancing near a river"
+  - "a sbs cat with a glasses"
+  - "a sbs cat wearning a jacket"
+  - "a sbs cat with a crown"
+  - "a sbs cat with long hair"
+  - "a sbs cat is riding a bike"
+  - "a sbs cat is under a table"
+  - "a sbs cat is on the top of a table"
+  
+
+interact-animal:
+  - a sbs cat is playing with a cat
+  - a dog is in left of a sbs cat
+  - a dog is fighting with a sbs cat
+  - a sbs cat is riding a horse
+

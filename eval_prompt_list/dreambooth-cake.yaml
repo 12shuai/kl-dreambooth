@@ -1,0 +1,29 @@
+#1.single object
+replace:
+  - "a round disk with orange frosting on a plate"
+  - "a round cup with orange frosting on a plate"
+
+manupulation:
+  - "a round cake with orange frosting on a plate"
+  - "a round cake with red frosting on a plate"
+  - "a round cake with blue frosting on a plate"
+  - "a round cake with white frosting on a plate"
+  - "a square cake with orange frosting on a plate"
+  - "a square cake with white frosting on a plate"
+
+
+
+addition:
+  - "a round cake with orange frosting with a cat on a plate"
+  - "a round cake with orange frosting with a dog on a plate"
+  - "a round cake with orange frosting with a toy on a plate"
+  - "a round cake with orange frosting with a book on a plate"
+  - "a round cake with orange frosting with a phone on a plate"
+  - "a round cake with orange frosting with a apple on a plate"
+
+
+
+remove:
+- "a round cake on a plate"
+- "a orange frosting on a plate"
+- "a round cake with orange frosting"

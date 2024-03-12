@@ -1,0 +1,38 @@
+{
+    "<asset0>":[
+        "color",
+        "red",
+        "blue",
+        "yellow",
+        "white",
+        "black",
+        "purple",
+        "brown"
+    ],
+    "<asset1>":[
+        "object",
+        "genre",
+        "category",
+        "class",
+        "variety",
+        "kind"
+        
+    ],
+    "<asset2>":[
+        "shape",
+        "sphere",
+        "rectangle",
+        "triangle",
+        "outline",
+        "structure",
+        "profile"
+    ],
+    "<asset3>":[
+        "style",
+        "fashion",
+        "characteristic",
+        "ambiance",
+        "appearance"
+    ]
+    
+}
