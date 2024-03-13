@@ -2,12 +2,6 @@
 single-object:
   - "a sbs cat"
   - "a photo of a sbs cat"
-  - "a human and a sbs cat"
-  - "a human with sbs cat"
-  - "a dog and a sbs cat"
-  - "a cat and a sbs cat"
-  - "a monkey and a sbs cat"
-  - "a photo of a sbs cat"
 
 #color style
 style:
@@ -17,6 +11,9 @@ style:
   - "a sbs cat in Van Gogh style"
   - "a sbs cat in graffiti style"
   - "a sbs cat in comic style"
+  - "a sbs cat in lego style"
+  - "a sbs cat in pixel art style"
+  - "a sbs cat in cartoon style"
 
 # as-style:
 #   - "a cat in style of sbs cat"
@@ -77,9 +74,12 @@ interact-obj:
   - "a sbs cat wearning a jacket"
   - "a sbs cat with a crown"
   - "a sbs cat with long hair"
+  - "a sbs cat with glasses"
+  - "a sbs cat with hat"
   - "a sbs cat is riding a bike"
   - "a sbs cat is under a table"
   - "a sbs cat is on the top of a table"
+  
   
 
 interact-animal:
@@ -87,4 +87,9 @@ interact-animal:
   - a dog is in left of a sbs cat
   - a dog is fighting with a sbs cat
   - a sbs cat is riding a horse
+  - "a human and a sbs cat"
+  - "a human with sbs cat"
+  - "a dog and a sbs cat"
+  - "a cat and a sbs cat"
+  - "a monkey and a sbs cat"
 

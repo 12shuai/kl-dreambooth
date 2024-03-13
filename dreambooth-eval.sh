@@ -81,67 +81,67 @@
 
 
 
-CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-  --model_path "dreambooth-outputs/grey_sloth_plushie-pp" \
-  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-  --output_path "dreambooth-outputs/grey_sloth_plushie-pp/eval" \
-  --seed_list 0 1 2 \
-  # --overwrite`
-
-
-
 # CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-#   --model_path "dreambooth-outputs/grey_sloth_plushie-non-pp" \
+#   --model_path "dreambooth-outputs/grey_sloth_plushie-pp" \
 #   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-#   --output_path "dreambooth-outputs/grey_sloth_plushie-non-pp/eval" \
-#   --seed_list 0 1 2 \
-#   # --overwrite
-
-
-
-# CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-#   --model_path "dreambooth-outputs/grobot_toy-pp" \
-#   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-#   --output_path "dreambooth-outputs/grobot_toy-pp/eval" \
+#   --output_path "dreambooth-outputs/grey_sloth_plushie-pp/eval" \
 #   --seed_list 0 1 2 \
 #   # --overwrite`
 
 
 
+# # CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
+# #   --model_path "dreambooth-outputs/grey_sloth_plushie-non-pp" \
+# #   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+# #   --output_path "dreambooth-outputs/grey_sloth_plushie-non-pp/eval" \
+# #   --seed_list 0 1 2 \
+# #   # --overwrite
+
+
+
+# # CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
+# #   --model_path "dreambooth-outputs/grobot_toy-pp" \
+# #   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+# #   --output_path "dreambooth-outputs/grobot_toy-pp/eval" \
+# #   --seed_list 0 1 2 \
+# #   # --overwrite`
+
+
+
+# # CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
+# #   --model_path "dreambooth-outputs/grobot_toy-non-pp" \
+# #   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+# #   --output_path "dreambooth-outputs/grobot_toy-non-pp/eval" \
+# #   --seed_list 0 1 2 \
+# #   # --overwrite
+
+
+
+
 # CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-#   --model_path "dreambooth-outputs/grobot_toy-non-pp" \
+#   --model_path "dreambooth-outputs/robot_toy-pp" \
 #   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-#   --output_path "dreambooth-outputs/grobot_toy-non-pp/eval" \
+#   --output_path "dreambooth-outputs/robot_toy-pp/eval" \
 #   --seed_list 0 1 2 \
-#   # --overwrite
+#   # --overwrite`
 
 
 
-
-CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-  --model_path "dreambooth-outputs/robot_toy-pp" \
-  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-  --output_path "dreambooth-outputs/robot_toy-pp/eval" \
-  --seed_list 0 1 2 \
-  # --overwrite`
+# # CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
+# #   --model_path "dreambooth-outputs/robot_toy-non-pp" \
+# #   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+# #   --output_path "dreambooth-outputs/robot_toy-non-pp/eval" \
+# #   --seed_list 0 1 2 \
+# #   # --overwrite
 
 
 
 # CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-#   --model_path "dreambooth-outputs/robot_toy-non-pp" \
+#   --model_path "dreambooth-outputs/monster_toy-pp" \
 #   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-#   --output_path "dreambooth-outputs/robot_toy-non-pp/eval" \
+#   --output_path "dreambooth-outputs/monster_toy-pp/eval" \
 #   --seed_list 0 1 2 \
-#   # --overwrite
-
-
-
-CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-  --model_path "dreambooth-outputs/monster_toy-pp" \
-  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-  --output_path "dreambooth-outputs/monster_toy-pp/eval" \
-  --seed_list 0 1 2 \
-  # --overwrite`
+#   # --overwrite`
 
 
 
@@ -153,5 +153,12 @@ CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
 #   # --overwrite
 
 
+
+CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
+  --model_path "dreambooth-outputs/grey_sloth_plushie-pp-style" \
+  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+  --output_path "dreambooth-outputs/grey_sloth_plushie-pp-style/eval" \
+  --seed_list 0 1 2 \
+  # --overwrite`
 
 

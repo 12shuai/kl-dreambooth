@@ -717,7 +717,7 @@ class SpatialDreambooth:
 
         # Generate class images if prior preservation is enabled.
         if self.args.with_prior_preservation:
-            class_images_dir = Path(os.path.join(self.args.class_data_dir,self.args.instance_class))
+            class_images_dir = Path(os.path.join(self.args.class_data_dir,self.args.class_prompt))
             if not class_images_dir.exists():
                 class_images_dir.mkdir(parents=True)
             cur_class_images = len(list(class_images_dir.iterdir()))
@@ -933,7 +933,7 @@ class SpatialDreambooth:
             instance_prompt=self.args.instance_prompt,
             instance_data_root=self.args.instance_data_dir,
             # placeholder_tokens=self.placeholder_tokens,
-            class_data_root=os.path.join(self.args.class_data_dir,self.args.instance_class)
+            class_data_root=os.path.join(self.args.class_data_dir,self.args.class_prompt)
             if self.args.with_prior_preservation
             else None,
             class_prompt=self.args.class_prompt,

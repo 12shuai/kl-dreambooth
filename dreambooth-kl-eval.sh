@@ -32,9 +32,9 @@
 
 
 CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-  --model_path "dreambooth-kl-outputs/grey_sloth_plushie_style_prompt_weight_10" \
-  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-  --output_path "dreambooth-kl-outputs/grey_sloth_plushie_style_prompt_weight_10/eval" \
+  --model_path "dreambooth-kl-outputs/lannie_null_prompt_weight_5" \
+  --prompt_file_list eval_prompt_list/dreambooth-cat.yaml \
+  --output_path "dreambooth-kl-outputs/lannie_null_prompt_weight_5/eval" \
   --seed_list 0 1 2 \
   # --overwrite`
 

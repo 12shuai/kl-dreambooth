@@ -1244,24 +1244,29 @@ class SpatialDreambooth:
                     shape=latents.shape
                     # shape[0]=self.args.kl_batch
                     
+                    
                     kl_ref_model_output,kl_ref_sample=self._model_inference_from_scratch(shape,self.noise_scheduler.timesteps[0],cls_kl_encoder_hidden_states,self.ref_unet)
-                    # last_latents=self.last_forward(batch["instance_prompt"].chunk(2)[0])
-                    # print(self.noise_scheduler.timesteps)
                     kl_ref_initial_latents=self._forward(kl_ref_model_output,kl_ref_sample,(self.noise_scheduler.timesteps[0]))
+                    
+                    
+                    
+                    kl_ref_noisy_latents=self._infer_from_T_to_t(kl_ref_initial_latents,kl_ref_sample,kl_ref_timesteps,[self.noise_scheduler.timesteps[0]])
+                    
+                    # kl_ref_noise=torch.randn_like(kl_ref_initial_latents)
+                    # kl_ref_noisy_latents = self.noise_scheduler.add_noise(
+                    #     kl_ref_initial_latents, kl_ref_noise, kl_ref_timesteps
+                    # )
 
-                    kl_ref_noise=torch.randn_like(kl_ref_initial_latents)
-                    kl_ref_noisy_latents = self.noise_scheduler.add_noise(
-                        kl_ref_initial_latents, kl_ref_noise, kl_ref_timesteps
-                    )
-
-                    # self_model_pred=self.unet(
-                    #     ref_noisy_latents, ref_timesteps, cls_encoder_hidden_states
-                    # ).sample
+                    # # self_model_pred=self.unet(
+                    # #     ref_noisy_latents, ref_timesteps, cls_encoder_hidden_states
+                    # # ).sample
                     noisy_latents=torch.cat([noisy_latents,kl_ref_noisy_latents])
                     timesteps=torch.cat([timesteps,kl_ref_timesteps])
                     encoder_hidden_states=torch.cat([encoder_hidden_states,cls_encoder_hidden_states])
                     ord_timesteps,kl_ref_timesteps=timesteps.chunk(2)
+
                     # Predict the noise residual
+                    
                     model_pred = self.unet(
                         noisy_latents, timesteps, encoder_hidden_states
                     ).sample
@@ -1271,14 +1276,18 @@ class SpatialDreambooth:
                     model_pred,kl_model_pred=model_pred.chunk(2)
                     # Get the target for loss depending on the prediction type
                     if self.noise_scheduler.config.prediction_type == "epsilon":
-                        target,kl_ref_target = noise,kl_ref_noise
+                        # target,kl_ref_target = noise,kl_ref_noise
+                        target= noise
                     elif self.noise_scheduler.config.prediction_type == "v_prediction":
                         
-                        target,kl_ref_target = self.noise_scheduler.get_velocity(
+                        # target,kl_ref_target = self.noise_scheduler.get_velocity(
+                        #     latents, noise, ord_timesteps
+                        # ),
+                        # self.noise_scheduler.get_velocity(
+                        #     kl_ref_initial_latents, kl_ref_noise, kl_ref_timesteps
+                        # )
+                        target= self.noise_scheduler.get_velocity(
                             latents, noise, ord_timesteps
-                        ),
-                        self.noise_scheduler.get_velocity(
-                            kl_ref_initial_latents, kl_ref_noise, kl_ref_timesteps
                         )
                     else:
                         raise ValueError(
@@ -1422,26 +1431,37 @@ class SpatialDreambooth:
         
         return noise_pred,latents
 
-    def _infer_from_T_to_t(self,pred_original_sample,sample,timestep_t,timestep_T):
-        def compute_alpha_bar(t):
-            return self.noise_scheduler.alphas_cumprod[t]
-        def compute_variance(t):
-            if self.noise_scheduler.variance_type == "fixed_small_log":
-                variance = self.noise_scheduler._get_variance(t, predicted_variance=None)**2
-            else:
-                variance = self.noise_scheduler._get_variance(t, predicted_variance=None)
-            return variance
-        alpha_bar_t,alpha_bar_T=compute_alpha_bar(timestep_t),compute_alpha_bar(timestep_T)
+    def _infer_from_T_to_t(self,pred_original_sample,latents,timestep_t_list,timestep_T):
+        def compute_alpha_bar(t_list):
+            res=[]
+            for t in t_list:
+                res.append(self.noise_scheduler.alphas_cumprod[t])
+            return torch.Tensor(res).to(pred_original_sample)
+        
+        def compute_variance(t_list):
+            res=[]
+            for t in t_list:
+                if self.noise_scheduler.variance_type == "fixed_small_log":
+                    variance = self.noise_scheduler._get_variance(t, predicted_variance=None)**2
+                else:
+                    variance = self.noise_scheduler._get_variance(t, predicted_variance=None)
+                res.append(variance)
+            return torch.Tensor(res).to(pred_original_sample)
+        
+        res=[]
+        alpha_bar_t,alpha_bar_T=compute_alpha_bar(timestep_t_list),compute_alpha_bar(timestep_T)
         alpha_bar_T_div_t=alpha_bar_t/alpha_bar_T
-        variance_T,variance_t=compute_variance(timestep_T),compute_variance(timestep_t)
+        variance_T,variance_t=compute_variance(timestep_T),compute_variance(timestep_t_list)
         variance_T_div_t=variance_T-alpha_bar_T_div_t*variance_t
         variance=variance_T_div_t*variance_t/variance_T
 
-        mu=(alpha_bar_T_div_t*variance_t/variance_T)*sample+(alpha_bar_t*variance_T_div_t/variance_T)*pred_original_sample
+        print(latents.shape,variance_T.shape)
+        mu=(alpha_bar_T_div_t*variance_t/variance_T)*latents+(alpha_bar_t*variance_T_div_t/variance_T)*pred_original_sample
             
         epsilon=torch.randn_like(pred_original_sample)
+        res.append(mu+epsilon*variance)
 
-        return  mu+epsilon*variance
+        return  torch.cat
 
     
 

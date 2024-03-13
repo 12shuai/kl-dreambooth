@@ -52,17 +52,28 @@ CUDA_VISIBLE_DEVICES=3 python3 train_dreambooth_self_play.py \
 接下来计划
 1.提升欠拟合
 变化weight
-放在SDXL
+
 
 2.提升过拟合
+  放在SDXL——提升风格化
   使用LCM
   双向kl散度
+  换成ref的预测作为kl loss
   试一下别的prompt，比如style——似乎没什么效果
-  只用sbs，去掉a photo of
+  a photo of sbs，没有dog，然后通过某种损失将sbs和dog联系在一起（初始化，对比损失，条件log）。
   提升时间
   使用CC
+  随时间变化的KL散度项（因为预测的准确率跟采样时间有关）
+  想清楚如何通过
+  在特定的evaluation上finetune
+
+
+3.其他应用
   多个目标
   单图编辑
+
+
+
 
 
 2.构思self-play如何引入这个东西

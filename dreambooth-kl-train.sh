@@ -198,6 +198,31 @@
 #   # --flip_p 1\
 
 
+#############################cat
+CUDA_VISIBLE_DEVICES=2 python3 train_dreambooth_KL.py \
+  --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/monster_toy" \
+  --class_prompt "" \
+  --class_data_dir inputs/dreambooth_kl_data_dir \
+  --phase1_train_steps 0 \
+  --phase2_train_steps 1000 \
+  --output_dir dreambooth-kl-outputs/monster_toy_non_prompt_weight_10_ref_as_loss\
+  --img_log_steps 200 \
+  --log_checkpoints \
+  --initial_learning_rate 5e-5 \
+  --train_batch_size 2 \
+  --instance_class "toy" \
+  --beta_dpo 1000\
+  --no_prior_preservation \
+  --train_text_encoder \
+  --with_kl \
+  --kl_loss_weight 10 \
+  # --kl_batch 8
+
+
+  # --train_token \
+  # --flip_p 1\
+
+
 
 # #############################cat
 # CUDA_VISIBLE_DEVICES=4 python3 train_dreambooth_KL.py \
@@ -219,26 +244,45 @@
 #   --kl_loss_weight 10 \
 #   # --kl_batch 8
 
-
 #############################cat
-CUDA_VISIBLE_DEVICES=5 python3 train_dreambooth_KL.py \
-  --instance_data_dir "examples/boluo" \
+CUDA_VISIBLE_DEVICES=4 python3 train_dreambooth_KL.py \
+  --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/grey_sloth_plushie" \
   --class_prompt "" \
   --class_data_dir inputs/dreambooth_kl_data_dir \
   --phase1_train_steps 0 \
   --phase2_train_steps 1000 \
-  --output_dir dreambooth-kl-outputs/boluo_null_prompt_weight_10\
+  --output_dir dreambooth-kl-outputs/grey_sloth_plushie_weight_10_ref_as_loss\
   --img_log_steps 200 \
   --log_checkpoints \
   --initial_learning_rate 5e-5 \
   --train_batch_size 2 \
-  --instance_class "cat" \
+  --instance_class "toy" \
   --beta_dpo 1000\
   --no_prior_preservation \
   --train_text_encoder \
   --with_kl \
   --kl_loss_weight 10 \
   # --kl_batch 8
+
+#############################cat
+# CUDA_VISIBLE_DEVICES=5 python3 train_dreambooth_KL.py \
+#   --instance_data_dir "examples/lannie" \
+#   --class_prompt "" \
+#   --class_data_dir inputs/dreambooth_kl_data_dir \
+#   --phase1_train_steps 0 \
+#   --phase2_train_steps 1000 \
+#   --output_dir dreambooth-kl-outputs/lannie_null_prompt_weight_5\
+#   --img_log_steps 200 \
+#   --log_checkpoints \
+#   --initial_learning_rate 5e-5 \
+#   --train_batch_size 4 \
+#   --instance_class "cat" \
+#   --beta_dpo 1000\
+#   --no_prior_preservation \
+#   --train_text_encoder \
+#   --with_kl \
+#   --kl_loss_weight 5 \
+#   # --kl_batch 8
 
 
 # #############################cat
