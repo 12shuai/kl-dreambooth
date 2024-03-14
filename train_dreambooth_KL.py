@@ -66,6 +66,90 @@ check_min_version("0.12.0")
 
 logger = get_logger(__name__)
 
+
+
+def calculate_steer_loss(token_embedding,
+                         input_ids,
+                         batch_placeholder_token_id_list,
+                         stop_ids,
+                         special_ids,
+                         batch_positive_ids_list,
+                        #  with_prior_preservation,
+                         temperature=0.07):
+    """L_steer"""
+    # compute input embeddings
+    # print(
+    #     input_ids,
+    #     batch_placeholder_token_id_list,
+    #     stop_ids,
+    #     special_ids,
+    #     batch_positive_ids_list
+    # )
+    batch_loss=0
+    cnt=0
+    inputs_embeds = token_embedding(input_ids)  # (bs, 77, 768)
+    for b_idx,(placeholder_token_id,positive_ids) in enumerate(zip(batch_placeholder_token_id_list,batch_positive_ids_list)):
+        with torch.no_grad(
+        ):  # no gradients from positive and negative embeds, only from <R>
+            positive_embeds = token_embedding(positive_ids)
+            stop_mask = torch.isin(
+                input_ids[b_idx],
+                # torch.tensor(stop_ids + special_ids +
+                #             [placeholder_token_id]).cuda())  # (bs, 77)
+                torch.tensor(stop_ids +special_ids +
+                            [placeholder_token_id]+[torch.tensor(0).cuda()]).cuda())  # (bs, 77)
+                # torch.tensor(
+                #             [placeholder_token_id]+[torch.tensor(0).cuda()]).cuda())  # (bs, 77)
+                # torch.tensor(stop_ids +special_ids +
+                #             placeholder_token_id_list.tolist()+[torch.tensor(0).cuda()]).cuda())  # (bs, 77)
+            # print("neg_stop_mask",stop_mask)
+            # exit(0)
+            negative_embds = inputs_embeds[b_idx][~stop_mask]  # (num_stop_tokens, 768) 3
+            # print("negative_embds:",negative_embds.shape[0])
+            # remove bos and eos in positive embeddings
+            stop_mask = torch.isin(positive_ids,
+                                torch.tensor(special_ids).cuda()).cuda()  # (bs, 77)
+            zero_mask=torch.isin(positive_ids,
+                                torch.tensor([0]).cuda()).cuda()
+            stop_mask=stop_mask | zero_mask
+            positive_embeds = positive_embeds[
+                ~stop_mask]  # (num_positive_tokens, 768), where num_positive_tokens = num_positives * bs
+            # print("pos_stop_mask",stop_mask)
+            # stack positives and negatives as a pn_block
+            # print("positive_embeds:",positive_embeds.shape[0])
+
+            
+            pn_embeds = torch.cat([positive_embeds, negative_embds], dim=0)
+            pn_embeds_normalized = F.normalize(
+                pn_embeds, p=2,
+                dim=1)  # (num_positive_tokens+num_negative_tokens, 768)
+
+        # compute relation embeds <R>
+        relation_mask = (input_ids[b_idx] == placeholder_token_id)  # (77)
+        # print("placeholder_token_id:",placeholder_token_id)
+        # print("relation_mask:",relation_mask)
+        relation_embeds = inputs_embeds[b_idx][relation_mask]  # (1, 1024)
+        relation_embeds_normalized = F.normalize(relation_embeds, p=2, dim=1)
+        # print("relation_embeds:",relation_embeds.shape)
+        # compute Multi-Instance InfoNCE loss
+        logits = torch.einsum('nc,mc->nm',
+                            [relation_embeds_normalized, pn_embeds_normalized
+                            ])  # (1, num_positive_tokens+num_negative_tokens)
+
+        logits /= temperature
+        nominator = torch.logsumexp(logits[:, :positive_embeds.shape[0]], dim=1)
+        denominator = torch.logsumexp(logits, dim=1)
+        # print("denominator ,nominator",denominator,nominator)
+        # loss_list.append()
+        cnt+=1
+        batch_loss+=torch.mean(denominator - nominator)
+        # batch_loss_list.append(loss_list)
+    batch_loss=batch_loss/cnt
+    # exit(0)
+    return batch_loss
+
+
+
 def import_model_class_from_model_name_or_path(
     pretrained_model_name_or_path: str, revision: str
 ):
@@ -128,6 +212,7 @@ def parse_args(input_args=None):
         required=False,
         help="A folder containing the training data of class images.",
     )
+    parser.add_argument("--num_positives", type=int,default=4)
     parser.add_argument(
         "--class_prompt",
         type=str,
@@ -191,6 +276,13 @@ def parse_args(input_args=None):
     #         " cropped. The images will be resized to the resolution first before cropping."
     #     ),
     # )
+
+    parser.add_argument(
+        "--scaled_cosine_alpha",
+        type=float,
+        default=0.5,
+        help="The skewness (alpha) of the Importance Sampling Function",
+    )
     parser.add_argument(
         "--train_text_encoder",
         action="store_true",
@@ -357,6 +449,12 @@ def parse_args(input_args=None):
     )
 
     parser.add_argument(
+        "--importance_sampling",
+        action="store_true",
+        help="A folder containing the training data of instance images.",
+    )
+
+    parser.add_argument(
         "--with_kl",
         action="store_true",
         help=(
@@ -384,7 +482,13 @@ def parse_args(input_args=None):
     #         " *output_dir/runs/**CURRENT_DATETIME_HOSTNAME***."
     #     ),
     # )
-
+    parser.add_argument("--steer_loss_weight",type=float,default=0)
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default="0.07",
+        help="Temperature parameter for L_steer",
+    )
 
     parser.add_argument(
         "--allow_tf32",
@@ -414,6 +518,19 @@ def parse_args(input_args=None):
             " flag passed with the `accelerate.launch` command. Use this argument to override the accelerate config."
         ),
     )
+    parser.add_argument(
+        "--relation_words_list",
+        type=str,
+        nargs="*",
+        # action="append",
+        default=[],
+        help=(
+            "Whether to use mixed precision. Choose between fp16 and bf16 (bfloat16). Bf16 requires PyTorch >="
+            " 1.10.and an Nvidia Ampere GPU.  Default to the value of accelerate config of the current system or the"
+            " flag passed with the `accelerate.launch` command. Use this argument to override the accelerate config."
+        ),
+    )
+
     parser.add_argument(
         "--prior_generation_precision",
         type=str,
@@ -463,6 +580,13 @@ def parse_args(input_args=None):
         "--dataset_length",
         type=int,
         default=0,
+        help="A token to use as a placeholder for the concept.",
+    )
+
+    parser.add_argument(
+        "--not_use_instance_class_suffix",
+        action="store_false",
+        dest="use_instance_class_suffix",
         help="A token to use as a placeholder for the concept.",
     )
 
@@ -517,6 +641,10 @@ def parse_args(input_args=None):
     return args
 
 
+def importance_sampling_fn(t, max_t, alpha):
+    """Importance Sampling Function f(t)"""
+    return 1 / max_t * (1 - alpha * math.cos(math.pi * t / max_t))
+
 
 class DreamBoothDataset(Dataset):
     """
@@ -529,18 +657,27 @@ class DreamBoothDataset(Dataset):
         instance_prompt,
         instance_data_root,
         tokenizer,
+        placeholder,
         class_prompt=None,
         size=512,
         center_crop=False,
         flip_p=1,
-        length=0
+        length=0,
+        relation_words_list=[],
+        num_positives=1
     ):
         self.size = size
         self.center_crop = center_crop
         self.tokenizer = tokenizer
         self.flip_p = flip_p
+        self.placeholder=placeholder
+        self.num_positives=num_positives
 
+        self.relation_words_list= relation_words_list
+        assert isinstance(self.relation_words_list,list)
+        
         # print(size)
+        print("sxc:relation_words_list and placeholder:",relation_words_list,placeholder)
         self.image_transforms = transforms.Compose(
             [
                 transforms.Resize(
@@ -635,10 +772,42 @@ class DreamBoothDataset(Dataset):
             return_tensors="pt",
         ).input_ids
 
+        if len(self.relation_words_list) > 0:
+            # print(self.relation_words_list,self.placeholder_tokens)
+            # example["token_ids"]=[]
+            example["positive_ids"]=[]
+            example["positive_prompt"] = []
+            relation_words=self.relation_words_list
+            positive_words = random.sample(
+                relation_words, k=min(self.num_positives,len(self.relation_words_list)))
+            positive_words_string = " ".join(positive_words)
+            example["token_ids"] = torch.tensor(
+                self.tokenizer.encode(self.placeholder)[1:-1])
+            # print(self.tokenizer.decode(self.tokenizer.encode(self.placeholder)[1:-1]))
+            # exit(0)
+            
+            # print(self.tokenizer.encode(self.placeholder),example["token_ids"],"sxc_hh")
+            # exit(0)
+            # example["token_ids"].append(self.tokenizer(
+            #     positive_words_string,
+            #     padding="max_length",
+            #     truncation=True,
+            #     max_length=self.tokenizer.model_max_length,
+            #     return_tensors="pt",
+            # ).input_ids[0])
+            example["positive_ids"]=(self.tokenizer(
+                positive_words_string,
+                padding="max_length",
+                truncation=True,
+                max_length=self.tokenizer.model_max_length,
+                return_tensors="pt",
+            ).input_ids[0])
+            example["positive_prompt"]=(positive_words_string)
+
         return example
 
 
-def collate_fn(examples, with_prior_preservation=False):
+def collate_fn(examples, use_postive_ids=False):
     input_ids = [example["instance_prompt_ids"] for example in examples]
     pixel_values = [example["instance_images"] for example in examples]
     instance_prompts=[example["instance_prompt"] for example in examples]
@@ -649,6 +818,7 @@ def collate_fn(examples, with_prior_preservation=False):
 
     pixel_values = torch.stack(pixel_values)
     pixel_values = pixel_values.to(memory_format=torch.contiguous_format).float()
+
 
     input_ids = torch.cat(input_ids, dim=0)
     class_ids = torch.cat(class_ids, dim=0)
@@ -663,6 +833,19 @@ def collate_fn(examples, with_prior_preservation=False):
         # "instance_masks": masks,
         # "token_ids": token_ids,
     }
+    if use_postive_ids:
+        token_ids=[example["token_ids"] for example in examples]
+        # token_ids = torch.stack(token_ids)
+
+        positive_ids=[example["positive_ids"] for example in examples]
+        positive_prompt=[example["positive_prompt"] for example in examples]
+        # print("sxc2:token_ids:",token_ids,positive_ids,positive_prompt)
+        # exit(0)
+        batch.update({
+            "token_ids":token_ids,
+            "positive_ids":positive_ids,
+            "positive_prompt":positive_prompt
+        })
     return batch
 
 class PromptDataset(Dataset):
@@ -856,7 +1039,8 @@ class SpatialDreambooth:
         # Add assets tokens to tokenizer
         self.args.num_of_assets=1
         self.placeholder_tokens = self.args.placeholder_token
-        self.args.instance_prompt = f"a photo of {self.placeholder_tokens} {self.args.instance_class}"
+        self.args.instance_prompt = f"a photo of {self.placeholder_tokens} {self.args.instance_class}" if self.args.use_instance_class_suffix else f"a photo of {self.placeholder_tokens}"
+        print("sxc:instance_prompt:",self.args.instance_prompt)
         # [
         #     self.args.placeholder_token.replace(">", f"{idx}>")
         #     for idx in range(self.args.num_of_assets)
@@ -944,6 +1128,7 @@ class SpatialDreambooth:
         else:
             optimizer_class = torch.optim.AdamW
 
+        assert (self.args.steer_loss_weight>0 and len(self.args.relation_words_list)>0) or (self.args.steer_loss_weight==0 and len(self.args.relation_words_list)==0)
         # We start by only optimizing the embeddings
         optimizer=None
         lr_scheduler=None
@@ -972,10 +1157,13 @@ class SpatialDreambooth:
             instance_prompt=self.args.instance_prompt,
             instance_data_root=self.args.instance_data_dir,
             class_prompt=self.args.class_prompt,
+            placeholder=self.args.placeholder_token,
             tokenizer=self.tokenizer,
             size=self.args.resolution,
             center_crop=self.args.center_crop,
-            length=self.args.dataset_length
+            length=self.args.dataset_length,
+            relation_words_list=self.args.relation_words_list if self.args.steer_loss_weight>0 else [],
+            num_positives=self.args.num_positives
         )
 
         train_dataloader = torch.utils.data.DataLoader(
@@ -983,7 +1171,7 @@ class SpatialDreambooth:
             batch_size=self.args.train_batch_size,
             shuffle=True,
             collate_fn=lambda examples: collate_fn(
-                examples, self.args.with_prior_preservation
+                examples, self.args.steer_loss_weight>0 and len(self.args.relation_words_list)>0
             ),
             num_workers=self.args.dataloader_num_workers,
         )
@@ -1075,7 +1263,7 @@ class SpatialDreambooth:
         # We need to initialize the trackers we use, and also store our configuration.
         # The trackers initializes automatically on the main process.
         if self.accelerator.is_main_process:
-            self.accelerator.init_trackers("dreambooth", config=vars(self.args))
+            self.accelerator.init_trackers("dreambooth", config={})
 
         # Train
         total_batch_size = (
@@ -1146,6 +1334,23 @@ class SpatialDreambooth:
         # Create attention controller
         self.controller = AttentionStore()
         self.register_attention_control(self.controller)
+
+        if self.args.importance_sampling:
+            print("Using Relation-Focal Importance Sampling")
+            list_of_candidates = [
+                x for x in range(self.noise_scheduler.config.num_train_timesteps)
+            ]
+            prob_dist = [
+                importance_sampling_fn(x,
+                                    self.noise_scheduler.config.num_train_timesteps,
+                                    self.args.scaled_cosine_alpha)
+                for x in list_of_candidates
+            ]
+            prob_sum = 0
+            # normalize the prob_list so that sum of prob is 1
+            for i in prob_dist:
+                prob_sum += i
+            prob_dist = [x / prob_sum for x in prob_dist]
 
         for epoch in range(first_epoch, self.args.num_train_epochs):
             self.unet.train()
@@ -1234,7 +1439,16 @@ class SpatialDreambooth:
                     # Chunk the noise and model_pred into two parts and compute the loss on each part separately.
                     cls_encoder_hidden_states = self.text_encoder(batch["class_ids"])[0]
                     cls_kl_encoder_hidden_states = self.ref_text_encoder(batch["class_ids"])[0]
-                    kl_ref_timesteps = torch.randint(
+
+                    if self.args.importance_sampling:
+                        kl_ref_timesteps = np.random.choice(
+                            list_of_candidates,
+                            size=bsz,
+                            replace=True,
+                            p=prob_dist)
+                        kl_ref_timesteps = torch.tensor(kl_ref_timesteps,device=latents.device)
+                    else:
+                        kl_ref_timesteps = torch.randint(
                             0,
                             self.noise_scheduler.config.num_train_timesteps,
                             (bsz,),
@@ -1291,13 +1505,42 @@ class SpatialDreambooth:
                     # Compute prior loss
                     kl_loss = F.mse_loss(
                         kl_model_pred.float(),
-                        kl_ref_model_pred.float(),
-                        # kl_ref_target.float(),
+                        # kl_ref_model_pred.float(),
+                        kl_ref_target.float(),
                         reduction="mean",
                     )
+                    weighted_steer_loss=0
 
+                    if self.args.steer_loss_weight!=0:
+                        stop_words= ["a", "the"]
+                        expanded_stop_words = stop_words
+                        
+                        placeholder_token_ids_list=batch["token_ids"]
+                        # print("placeholder_token_ids_list:",placeholder_token_ids_list)
+                        stop_ids = self.tokenizer(
+                            " ".join(expanded_stop_words),
+                            truncation=False,
+                            return_tensors="pt",
+                        ).input_ids[0].detach().tolist()
+                        # print("stop_id:",stop_ids)
+
+                        special_ids = [self.tokenizer.bos_token_id, self.tokenizer.eos_token_id]
+                        # print("special_id:",special_ids)
+                        # print("positive_prompt:",batch["positive_prompt"])
+                        # print("input_ids:",batch["input_ids"])
+                        batch_steer_loss= calculate_steer_loss(
+                            self.text_encoder.get_input_embeddings(),
+                            batch["input_ids"],
+                            placeholder_token_ids_list,
+                            stop_ids,
+                            special_ids,
+                            batch["positive_ids"],
+                            temperature=self.args.temperature)
+
+                        logs["steer_loss"]=batch_steer_loss.detach().item()
+                        weighted_steer_loss = self.args.steer_loss_weight * batch_steer_loss
                     # Add the prior loss to the instance loss.
-                    loss = loss + self.args.kl_loss_weight * kl_loss
+                    loss = loss + self.args.kl_loss_weight * kl_loss+weighted_steer_loss
 
 
                     # Attention loss

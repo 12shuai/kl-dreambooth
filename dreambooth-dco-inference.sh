@@ -48,14 +48,24 @@
 
 
 CUDA_VISIBLE_DEVICES=2 python inference_dreambooth_dco.py \
-  --ref_model_path "dreambooth-outputs/cat2-non-pp" \
-  --prompt_file_list eval_prompt_list/dreambooth-cat.yaml \
-  --output_path "dreambooth-outputs/cat2-non-pp/eval_dco_test" \
+  --ref_model_path "dreambooth-outputs/grey_sloth_plushie-non-pp" \
+  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+  --output_path "dreambooth-outputs/grey_sloth_plushie-non-pp/eval_dco_test" \
   --w_rg 7.5\
   --w_g 7.5\
   --seed_list 0 1 2 \
   # --overwrite
 
+
+
+CUDA_VISIBLE_DEVICES=2 python inference_dreambooth_dco.py \
+  --ref_model_path "dreambooth-outputs/monster_toy-non-pp" \
+  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+  --output_path "dreambooth-outputs/monster_toy-non-pp/eval_dco_test" \
+  --w_rg 7.5\
+  --w_g 7.5\
+  --seed_list 0 1 2 \
+  # --overwrite
 
 # CUDA_VISIBLE_DEVICES=3 python inference_dreambooth_dco.py \
 #   --ref_model_path "dreambooth-dco-outputs/cat2-text" \

@@ -1455,13 +1455,14 @@ class SpatialDreambooth:
         variance_T_div_t=variance_T-alpha_bar_T_div_t*variance_t
         variance=variance_T_div_t*variance_t/variance_T
 
-        print(latents.shape,variance_T.shape)
-        mu=(alpha_bar_T_div_t*variance_t/variance_T)*latents+(alpha_bar_t*variance_T_div_t/variance_T)*pred_original_sample
+        # print(latents.shape,variance_T.shape,(alpha_bar_T_div_t*variance_t/variance_T).shape)
+        # alpha_bar_T_div_t*variance_t/variance_T
+        mu=(alpha_bar_T_div_t*variance_t/variance_T).unsqueeze(1).unsqueeze(2).unsqueeze(3)*latents \
+            +(alpha_bar_t*variance_T_div_t/variance_T).unsqueeze(1).unsqueeze(2).unsqueeze(3)*pred_original_sample
             
         epsilon=torch.randn_like(pred_original_sample)
-        res.append(mu+epsilon*variance)
 
-        return  torch.cat
+        return  mu+epsilon*variance.unsqueeze(1).unsqueeze(2).unsqueeze(3)
 
     
 

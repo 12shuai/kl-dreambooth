@@ -198,29 +198,29 @@
 #   # --flip_p 1\
 
 
-#############################cat
-CUDA_VISIBLE_DEVICES=2 python3 train_dreambooth_KL.py \
-  --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/monster_toy" \
-  --class_prompt "" \
-  --class_data_dir inputs/dreambooth_kl_data_dir \
-  --phase1_train_steps 0 \
-  --phase2_train_steps 1000 \
-  --output_dir dreambooth-kl-outputs/monster_toy_non_prompt_weight_10_ref_as_loss\
-  --img_log_steps 200 \
-  --log_checkpoints \
-  --initial_learning_rate 5e-5 \
-  --train_batch_size 2 \
-  --instance_class "toy" \
-  --beta_dpo 1000\
-  --no_prior_preservation \
-  --train_text_encoder \
-  --with_kl \
-  --kl_loss_weight 10 \
-  # --kl_batch 8
+# #############################cat
+# CUDA_VISIBLE_DEVICES=2 python3 train_dreambooth_KL.py \
+#   --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/monster_toy" \
+#   --class_prompt "" \
+#   --class_data_dir inputs/dreambooth_kl_data_dir \
+#   --phase1_train_steps 0 \
+#   --phase2_train_steps 1000 \
+#   --output_dir dreambooth-kl-outputs/monster_toy_non_prompt_weight_10_ref_as_loss\
+#   --img_log_steps 200 \
+#   --log_checkpoints \
+#   --initial_learning_rate 5e-5 \
+#   --train_batch_size 2 \
+#   --instance_class "toy" \
+#   --beta_dpo 1000\
+#   --no_prior_preservation \
+#   --train_text_encoder \
+#   --with_kl \
+#   --kl_loss_weight 10 \
+#   # --kl_batch 8
 
 
-  # --train_token \
-  # --flip_p 1\
+#   # --train_token \
+#   # --flip_p 1\
 
 
 
@@ -244,14 +244,58 @@ CUDA_VISIBLE_DEVICES=2 python3 train_dreambooth_KL.py \
 #   --kl_loss_weight 10 \
 #   # --kl_batch 8
 
+# #############################cat
+# CUDA_VISIBLE_DEVICES=4 python3 train_dreambooth_KL.py \
+#   --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/grey_sloth_plushie" \
+#   --class_prompt "" \
+#   --class_data_dir inputs/dreambooth_kl_data_dir \
+#   --phase1_train_steps 0 \
+#   --phase2_train_steps 1000 \
+#   --output_dir dreambooth-kl-outputs/grey_sloth_plushie_non_prompt_weight_10_ref_as_loss\
+#   --img_log_steps 200 \
+#   --log_checkpoints \
+#   --initial_learning_rate 5e-5 \
+#   --train_batch_size 2 \
+#   --instance_class "toy" \
+#   --beta_dpo 1000\
+#   --no_prior_preservation \
+#   --train_text_encoder \
+#   --with_kl \
+#   --kl_loss_weight 10 \
+#   # --kl_batch 8
+
 #############################cat
+# CUDA_VISIBLE_DEVICES=4 python3 train_dreambooth_KL.py \
+#   --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/grey_sloth_plushie" \
+#   --class_prompt "" \
+#   --class_data_dir inputs/dreambooth_kl_data_dir \
+#   --phase1_train_steps 0 \
+#   --phase2_train_steps 1000 \
+#   --output_dir dreambooth-kl-outputs/grey_sloth_plushie_non_prompt_weight_10_importance_sampling_non_class_suffix_steer_weight_1\
+#   --img_log_steps 200 \
+#   --log_checkpoints \
+#   --initial_learning_rate 5e-5 \
+#   --train_batch_size 2 \
+#   --instance_class "toy" \
+#   --beta_dpo 1000\
+#   --no_prior_preservation \
+#   --train_text_encoder \
+#   --with_kl \
+#   --kl_loss_weight 10 \
+#   --not_use_instance_class_suffix \
+#   --importance_sampling \
+#   --steer_loss_weight 1\
+#   --relation_words_list "toy" \
+  
+#   # --kl_batch 8
+
 CUDA_VISIBLE_DEVICES=4 python3 train_dreambooth_KL.py \
   --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/grey_sloth_plushie" \
   --class_prompt "" \
   --class_data_dir inputs/dreambooth_kl_data_dir \
   --phase1_train_steps 0 \
   --phase2_train_steps 1000 \
-  --output_dir dreambooth-kl-outputs/grey_sloth_plushie_weight_10_ref_as_loss\
+  --output_dir dreambooth-kl-outputs/grey_sloth_plushie_non_prompt_weight_10_non_class_suffix\
   --img_log_steps 200 \
   --log_checkpoints \
   --initial_learning_rate 5e-5 \
@@ -262,7 +306,12 @@ CUDA_VISIBLE_DEVICES=4 python3 train_dreambooth_KL.py \
   --train_text_encoder \
   --with_kl \
   --kl_loss_weight 10 \
-  # --kl_batch 8
+  --not_use_instance_class_suffix \
+  # --importance_sampling \
+  # --steer_loss_weight 1\
+  # --relation_words_list "toy" \
+  
+
 
 #############################cat
 # CUDA_VISIBLE_DEVICES=5 python3 train_dreambooth_KL.py \

@@ -56,9 +56,10 @@ CUDA_VISIBLE_DEVICES=3 python3 train_dreambooth_self_play.py \
 
 2.提升过拟合
   放在SDXL——提升风格化
+  从能量法找答案
   使用LCM
   双向kl散度
-  换成ref的预测作为kl loss
+  换成ref的预测作为kl loss——感觉变差了,因为klloss非常小，几乎不会进行优化
   试一下别的prompt，比如style——似乎没什么效果
   a photo of sbs，没有dog，然后通过某种损失将sbs和dog联系在一起（初始化，对比损失，条件log）。
   提升时间

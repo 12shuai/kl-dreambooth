@@ -250,11 +250,11 @@
 
 CUDA_VISIBLE_DEVICES=5 python3 train_dreambooth.py \
   --instance_data_dir "/mnt/CV_teamz/users/shuaixincheng/datasets/customized/dreambooth/grey_sloth_plushie" \
-  --class_prompt "a photo of a toy in Van Gogh style" \
+  --class_prompt "a photo of Van Gogh style" \
   --class_data_dir inputs/dreambooth_data_dir \
   --phase1_train_steps 0\
   --phase2_train_steps 1000 \
-  --output_dir dreambooth-outputs/grey_sloth_plushie-pp-style\
+  --output_dir dreambooth-outputs/grey_sloth_plushie-pp-style-non-toy\
   --img_log_steps 200 \
   --log_checkpoints \
   --initial_learning_rate 5e-5 \
