@@ -67,6 +67,10 @@ CUDA_VISIBLE_DEVICES=3 python3 train_dreambooth_self_play.py \
   随时间变化的KL散度项（因为预测的准确率跟采样时间有关）
   想清楚如何通过
   在特定的evaluation上finetune
+  插值——有效果
+  如何不过拟合到toy和其他动物，其他动物都会生成到sbs，其他词不能映射到该概念！！！！！！！！！！！！！！！！！！！
+  怎么让他能够有动作—，插值貌似不能完全解决
+
 
 
 3.其他应用

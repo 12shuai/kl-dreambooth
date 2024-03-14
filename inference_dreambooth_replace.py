@@ -34,12 +34,12 @@ from collections import defaultdict
 from PIL import Image
 from typing import Callable, List, Optional, Union
 
-class DCOPipeline(StableDiffusionPipeline):
+class ReplacePipeline(StableDiffusionPipeline):
     @torch.no_grad()
     def __call__(
         self,
-        ref_unet,
-        ref_guidance_scale,
+        placeholder_token,
+        instance_class,
         prompt: Union[str, List[str]] = None,
         height: Optional[int] = None,
         width: Optional[int] = None,
@@ -56,6 +56,7 @@ class DCOPipeline(StableDiffusionPipeline):
         return_dict: bool = True,
         callback: Optional[Callable[[int, int, torch.FloatTensor], None]] = None,
         callback_steps: Optional[int] = 1,
+        alpha=1,
         
     ):
         r"""
@@ -156,6 +157,41 @@ class DCOPipeline(StableDiffusionPipeline):
             prompt_embeds=prompt_embeds,
             negative_prompt_embeds=negative_prompt_embeds,
         )
+        # text_inputs = self.tokenizer(
+        #     prompt,
+        #     padding="max_length",
+        #     max_length=self.tokenizer.model_max_length,
+        #     truncation=True,
+        #     return_tensors="pt",
+        # )
+        # text_input_ids = text_inputs.input_ids
+        # _placeholder_index=self.tokenizer.encode(self.placeholder_token)[1:-1]
+        placeholder_index=[]
+        for _p in prompt:
+            try:
+                index=_p.split(" ").index(placeholder_token)+1
+            except:
+                index=_p.split(" ").index(instance_class)
+            
+            placeholder_index.append(index)
+
+        
+        replace_prompt=[_p.replace(" "+placeholder_token," "+instance_class) for _p in prompt]
+        # print(replace_prompt,placeholder_index,prompt_embeds.shape)
+        # exit(0)
+        replace_prompt_embeds = self._encode_prompt(
+            replace_prompt,
+            device,
+            num_images_per_prompt,
+            do_classifier_free_guidance,
+            negative_prompt,
+            prompt_embeds=None,
+            negative_prompt_embeds=None,
+        )
+
+        # replace_prompt_embeds[:,placeholder_index]=prompt_embeds[:,placeholder_index]
+        
+        prompt_embeds=replace_prompt_embeds*(alpha)+(1-alpha)*prompt_embeds
 
         # 4. Prepare timesteps
         self.scheduler.set_timesteps(num_inference_steps, device=device)
@@ -187,17 +223,17 @@ class DCOPipeline(StableDiffusionPipeline):
 
                 # predict the noise residual
                 noise_pred = self.unet(latent_model_input, t, encoder_hidden_states=prompt_embeds).sample
-                ref_noise_pred = ref_unet(latent_model_input, t, encoder_hidden_states=prompt_embeds).sample
+                # ref_noise_pred = ref_unet(latent_model_input, t, encoder_hidden_states=prompt_embeds).sample
 
                 # perform guidance
                 if do_classifier_free_guidance:
                     noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)
-                    _, ref_noise_pred = ref_noise_pred.chunk(2)
-                    # noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
-                    noise_pred = noise_pred_uncond
+                    # _, ref_noise_pred = ref_noise_pred.chunk(2)
+                    noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)
+                    # noise_pred = noise_pred_uncond
 
                 # noise_pred=noise_pred+ref_guidance_scale*(ref_noise_pred - noise_pred_text)
-                noise_pred=noise_pred+ref_guidance_scale*(ref_noise_pred - noise_pred)
+                # noise_pred=noise_pred+ref_guidance_scale*(ref_noise_pred - noise_pred)
                 # compute the previous noisy sample x_t -> x_t-1
                 latents = self.scheduler.step(noise_pred, t, latents, **extra_step_kwargs).prev_sample
 
@@ -230,14 +266,19 @@ class BreakASceneInference:
     def _parse_args(self):
         parser = argparse.ArgumentParser()
         parser.add_argument("--model_path", type=str,default="/mnt/CV_teamz/pretrained/stable-diffusion-2-1-base") #required=True
-        parser.add_argument("--ref_model_path", type=str,required=True)
-        parser.add_argument("--w_rg", type=float,required=True)
-        parser.add_argument("--w_g", type=float,default=7.5)
-        # parser.add_argument(
-        #     "--prompt", type=str, default="a photo of <asset0> at the beach"
-        # )
         parser.add_argument(
             "--prompt_list", type=str, nargs="*",default=[]
+        )
+        parser.add_argument(
+            "--placeholder_token", type=str, required=True,default=""
+        )
+        parser.add_argument(
+            "--alpha", type=float, default=1
+        )
+        parser.add_argument("--w_g", type=float,default=7.5)
+
+        parser.add_argument(
+            "--instance_class", type=str, required=True,default=""
         )
         parser.add_argument(
             "--prompt_file_list", type=str, nargs="*",default=["eval_prompt_list/hat.yaml"]
@@ -261,7 +302,7 @@ class BreakASceneInference:
     def _load_pipeline(self):
         # print(self.args.model_path)
         # print(os.path.isdir(self.args.model_path),os.path.exists(self.args.model_path))
-        self.pipeline = DCOPipeline.from_pretrained(
+        self.pipeline = ReplacePipeline.from_pretrained(
             self.args.model_path,
             torch_dtype=torch.float16,
         )
@@ -276,20 +317,6 @@ class BreakASceneInference:
         self.unet=self.pipeline.unet
         self.tokenizer=self.pipeline.tokenizer
 
-
-        ref_pipeline = DiffusionPipeline.from_pretrained(
-            self.args.ref_model_path,
-            torch_dtype=torch.float16,
-        )
-        # self.ref_pipeline.scheduler = DDIMScheduler(
-        #     beta_start=0.00085,
-        #     beta_end=0.012,
-        #     beta_schedule="scaled_linear",
-        #     clip_sample=False,
-        #     set_alpha_to_one=False,
-        # )
-        # self.ref_pipeline.to(self.args.device)
-        self.ref_unet=ref_pipeline.unet.to(self.args.device)
 
     @torch.no_grad()
     def infer_and_save(self):
@@ -330,7 +357,7 @@ class BreakASceneInference:
                 self.controller.cur_step = 0
                 self.controller.attention_store = {}
                 print(f"seed:{seed},prompt:{prompt_forward}")
-                images = self.pipeline(self.ref_unet,self.args.w_rg,prompt_forward,guidance_scale=self.args.w_g).images
+                images = self.pipeline(self.args.placeholder_token,self.args.instance_class,prompt_forward,guidance_scale=self.args.w_g,alpha=self.args.alpha).images
                 for idx,(prompt,image) in enumerate(zip(prompt_forward,images)):
                     
                     save_root=os.path.join(self.args.output_path,cate,prompt)

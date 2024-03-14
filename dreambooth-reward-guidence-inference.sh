@@ -1,25 +1,3 @@
-# CUDA_VISIBLE_DEVICES=1 python inference.py \
-#   --model_path "outputs/watch-no-asset" \
-#   --prompt_file_list eval_prompt_list/watch.yaml \
-#   --output_path "outputs/watch-no-asset/eval" \
-#   --seed_list 0 1 2 \
-#   # --overwrite
-
-
-# CUDA_VISIBLE_DEVICES=1 python inference.py \
-#   --model_path "outputs/watch-no-asset-prior-preserve" \
-#   --prompt_file_list eval_prompt_list/watch.yaml \
-#   --output_path "outputs/watch-no-asset-prior-preserve/eval" \
-#   --seed_list 0 1 2 \
-#   # --overwrite
-
-# CUDA_VISIBLE_DEVICES=1 python inference.py \
-#   --model_path "outputs/watch-init-prior-preserve" \
-#   --prompt_file_list eval_prompt_list/watch.yaml \
-#   --output_path "outputs/watch-init-prior-preserve/eval" \
-#   --seed_list 0 1 2 \
-#   # --overwrite
-
 
 # CUDA_VISIBLE_DEVICES=4 python inference_dreambooth.py \
 #   --model_path "dreambooth-dco-outputs/dog" \
@@ -47,21 +25,39 @@
   
 
 
+# CUDA_VISIBLE_DEVICES=2 python inference_dreambooth_dco.py \
+#   --ref_model_path "dreambooth-outputs/grey_sloth_plushie-non-pp" \
+#   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
+#   --output_path "dreambooth-outputs/grey_sloth_plushie-non-pp/eval_dco_test" \
+#   --w_rg 7.5\
+#   --w_g 7.5\
+#   --seed_list 0 1 2 \
+#   # --overwrite
+
+
+# CUDA_VISIBLE_DEVICES=1 python inference_dreambooth_dco.py \
+#   --ref_model_path "dreambooth-outputs/dog-non-pp" \
+#   --prompt_file_list eval_prompt_list/dreambooth-dog5.yaml \
+#   --output_path "dreambooth-outputs/dog-non-pp/eval_dco_w_7.5" \
+#   --w_rg 7.5\
+#   --w_g 7.5\
+#   --seed_list 0 1 2 \
+#   # --overwrite
+
+# CUDA_VISIBLE_DEVICES=2 python inference_dreambooth_dco.py \
+#   --ref_model_path "dreambooth-outputs/cat2-non-pp" \
+#   --prompt_file_list eval_prompt_list/dreambooth-cat.yaml \
+#   --output_path "dreambooth-outputs/cat2-non-pp/eval_dco_w_7.5" \
+#   --w_rg 7.5\
+#   --w_g 7.5\
+#   --seed_list 0 1 2 \
+#   # --overwrite
+
+
 CUDA_VISIBLE_DEVICES=2 python inference_dreambooth_dco.py \
-  --ref_model_path "dreambooth-outputs/grey_sloth_plushie-non-pp" \
+  --ref_model_path "dreambooth-dco-outputs/monster_toy" \
   --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-  --output_path "dreambooth-outputs/grey_sloth_plushie-non-pp/eval_dco_test" \
-  --w_rg 7.5\
-  --w_g 7.5\
-  --seed_list 0 1 2 \
-  # --overwrite
-
-
-
-CUDA_VISIBLE_DEVICES=2 python inference_dreambooth_dco.py \
-  --ref_model_path "dreambooth-outputs/monster_toy-non-pp" \
-  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-  --output_path "dreambooth-outputs/monster_toy-non-pp/eval_dco_test" \
+  --output_path "dreambooth-dco-outputs/monster_toy/eval_dco_test" \
   --w_rg 7.5\
   --w_g 7.5\
   --seed_list 0 1 2 \
