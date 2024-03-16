@@ -55,15 +55,16 @@ style:
 #   - "a sbs shape bowl"
 #   - "a sbs shape cup"
 #   - "a sbs shape apple"
-
+none:
+  - ""
 ##2.verb
 verb:
-  - "a photo of a running sbs"
-  - "a photo of a sleeping sbs"
-  - "a photo of a sitting sbs"
-  - "a photo of a standing sbs"
-  - "a photo of a walking sbs"
-  - "a photo of a dancing sbs"
+  - "a running sbs"
+  - "a sleeping sbs"
+  - "a sitting sbs"
+  - "a standing sbs"
+  - "a walking sbs"
+  - "a dancing sbs"
 
 ##3.interacting-
 interact-obj:

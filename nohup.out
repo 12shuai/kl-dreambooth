@@ -418,3 +418,21 @@ Traceback (most recent call last):
   File "<frozen importlib._bootstrap_external>", line 975, in get_code
   File "<frozen importlib._bootstrap_external>", line 1074, in get_data
 KeyboardInterrupt
+Traceback (most recent call last):
+  File "/mnt/CV_teamz/users/shuaixincheng/codes/text-to-image/customized/break-a-scene/train_dreambooth_KL_V3.py", line 28, in <module>
+    import torch
+  File "/home/shuaixincheng/xincheng/miniconda3/envs/break-a-scene/lib/python3.10/site-packages/torch/__init__.py", line 895, in <module>
+    import torch.utils.data
+  File "/home/shuaixincheng/xincheng/miniconda3/envs/break-a-scene/lib/python3.10/site-packages/torch/utils/data/__init__.py", line 20, in <module>
+    from torch.utils.data.datapipes.datapipe import (
+  File "/home/shuaixincheng/xincheng/miniconda3/envs/break-a-scene/lib/python3.10/site-packages/torch/utils/data/datapipes/__init__.py", line 1, in <module>
+    from . import iter
+  File "/home/shuaixincheng/xincheng/miniconda3/envs/break-a-scene/lib/python3.10/site-packages/torch/utils/data/datapipes/iter/__init__.py", line 32, in <module>
+    from torch.utils.data.datapipes.iter.routeddecoder import (
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 879, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 975, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_data
+KeyboardInterrupt

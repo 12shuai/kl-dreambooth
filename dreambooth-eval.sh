@@ -155,9 +155,9 @@
 
 
 CUDA_VISIBLE_DEVICES=2 python inference_dreambooth.py \
-  --model_path "dreambooth-outputs/grey_sloth_plushie-pp-style-non-toy" \
-  --prompt_file_list eval_prompt_list/dreambooth-toy.yaml \
-  --output_path "dreambooth-outputs/grey_sloth_plushie-pp-style-non-toy/eval" \
+  --model_path "dreambooth-kl-outputs/grey_sloth_plushie_non_prompt_weight_10" \
+  --prompt_file_list eval_prompt_list/dreambooth-dog5.yaml \
+  --output_path "dreambooth-kl-outputs/grey_sloth_plushie_non_prompt_weight_10/eval-dog" \
   --seed_list 0 1 2 \
   # --overwrite`
 
